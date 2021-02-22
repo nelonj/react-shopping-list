@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { setConstantValue } from 'typescript';
 import './App.css';
 
 
@@ -15,7 +16,19 @@ function App() {
   const [list, setList] = useState([''])
   console.log('hello')
   
-  
+  function removeItem(id: number) {
+    
+    return (
+    cloneList = [...myItemList],
+    myItemList = myItemList.filter((element, index) => index !== id ),
+    myAmountList = myAmountList.filter((element, index) => index !== id ),
+    printList = myItemList.map((element, index) => 
+      <li key={index}> {`${element} : ${myAmountList[index]}`} 
+      <button className='delete-button' onClick={() => removeItem(index)} > X </button> 
+      </li>),
+    setList(cloneList)
+    )
+  }
 
   function clickHandler() {
     
@@ -23,7 +36,10 @@ function App() {
     cloneList = [...myItemList],  
     myItemList.push(item),
     myAmountList.push(amount.toString()),
-    printList = myItemList.map((element, index) => <li key={index}> {`${element} : ${myAmountList[index]}`} </li>),
+    printList = myItemList.map((element, index) => 
+      <li key={index}> {`${element} : ${myAmountList[index]}`} 
+      <button className='delete-button' onClick={() => removeItem(index)} > X </button> 
+      </li>),
     setList(cloneList)
     )
   }
