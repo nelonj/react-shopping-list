@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { setConstantValue } from 'typescript';
 import './App.css';
 
 
@@ -13,26 +12,27 @@ interface Item {
 }
 type List = Item[]
 
+interface ShoppingListProps {
+  myList: List
+}
+
 function App() {
   const [item, setItem] = useState("")
   const [amount, setAmount] = useState("")
   let startingList: List = []
   const [list, setList] = useState(startingList)
-  console.log('hello')
 
   function removeItem(id: number) {
 
-    // return (
-    //   cloneList = [...myItemList],
-    //   myItemList = myItemList.filter((element, index) => index !== id),
-    //   setList(cloneList)
-    // )
+    let cloneList: List = list.filter((element, index) => index !== id);
+    setList(cloneList)
+
   }
 
-  function ShoppingList() {
+  function ShoppingList(props: ShoppingListProps) {
     return (
       <ul>
-        {list.map((element, index) =>
+        {props.myList.map((element, index) =>
           <li key={index}> {`${element.item} : ${element.amount}`}
             <button className='delete-button' onClick={() => removeItem(index)} > X </button>
           </li>)}
@@ -42,14 +42,12 @@ function App() {
 
   function clickHandler() {
 
-    // return (
-    //   cloneList = [...myItemList],
-    //   myItemList.push({ item: item, amount: amount }),
-    //   setList(cloneList)
-    // )
+    let cloneList: List = [...list];
+    cloneList.push({ item: item, amount: amount });
+    setList(cloneList)
   }
 
-  
+
 
   return (
     <div className="App">
@@ -68,7 +66,7 @@ function App() {
 
       <div className="shopping-list">
         <ul>
-          <ShoppingList />
+          <ShoppingList myList = {list} />
         </ul>
       </div>
 
